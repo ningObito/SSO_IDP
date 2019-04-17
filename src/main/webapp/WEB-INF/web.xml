@@ -1,0 +1,33 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  
+  <context-param>
+		<param-name>logbackConfigLocation</param-name>
+		<param-value>classpath:main/resources/logback.xml</param-value>
+	</context-param>  
+  
+  <servlet>
+  	<servlet-name>SsoLogin</servlet-name>
+  	<display-name>SsoLogin</display-name>
+  	<description></description>
+  	<servlet-class>com.obito.web.SsoLogin</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ArtifactResolution</servlet-name>
+  	<display-name>ArtifactResolution</display-name>
+  	<description></description>
+  	<servlet-class>com.obito.web.ArtifactResolution</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SsoLogin</servlet-name>
+  	<url-pattern>/ssologin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ArtifactResolution</servlet-name>
+  	<url-pattern>/artifactResolution</url-pattern>
+  </servlet-mapping>
+</web-app>
