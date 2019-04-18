@@ -12,14 +12,11 @@
   
   <servlet>
   	<servlet-name>SsoLogin</servlet-name>
-  	<display-name>SsoLogin</display-name>
-  	<description></description>
   	<servlet-class>com.obito.web.SsoLogin</servlet-class>
+  	<load-on-startup>1</load-on-startup>
   </servlet>
   <servlet>
   	<servlet-name>ArtifactResolution</servlet-name>
-  	<display-name>ArtifactResolution</display-name>
-  	<description></description>
   	<servlet-class>com.obito.web.ArtifactResolution</servlet-class>
   </servlet>
   <servlet-mapping>

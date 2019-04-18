@@ -72,6 +72,10 @@ public class SsoLogin extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
+		//这里必须初始化JCE，否则
+		//HTTPSOAP11Decoder decoder = new HTTPSOAP11Decoder();
+		//会报空指针错误
+		
 		super.init();
 	    try {
 		 JavaCryptoValidationInitializer javaCryptoValidationInitializer =

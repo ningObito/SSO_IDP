@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.DateTime;
-import org.opensaml.core.config.InitializationException;
 import org.opensaml.core.xml.config.XMLObjectProviderRegistrySupport;
 import org.opensaml.core.xml.io.MarshallingException;
 import org.opensaml.core.xml.schema.XSString;
@@ -41,7 +40,6 @@ import org.opensaml.saml.saml2.core.Subject;
 import org.opensaml.saml.saml2.core.SubjectConfirmation;
 import org.opensaml.saml.saml2.core.SubjectConfirmationData;
 import org.opensaml.saml.saml2.encryption.Encrypter;
-import org.opensaml.xmlsec.config.JavaCryptoValidationInitializer;
 import org.opensaml.xmlsec.encryption.support.DataEncryptionParameters;
 import org.opensaml.xmlsec.encryption.support.EncryptionConstants;
 import org.opensaml.xmlsec.encryption.support.EncryptionException;
@@ -71,31 +69,8 @@ public class ArtifactResolution extends HttpServlet {
 
     @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-       
-    	
-    	 JavaCryptoValidationInitializer javaCryptoValidationInitializer =
-	                new JavaCryptoValidationInitializer();
-         //这个方法应该在OpenSAML初始化之前被调用，
-         //来确保当前的JCE环境可以符合要求：AES/CBC/ISO10126Padding
-         // 对于XML的加密，JCE需要支持ACE（128/256），并使用ISO10126Padding（填充位）
-         try {
-			javaCryptoValidationInitializer.init();
-		} catch (InitializationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	log.debug("recieved artifactResolve:");
+       log.info("accept ArtifactResolution");
         HTTPSOAP11Decoder decoder = new HTTPSOAP11Decoder();
-
-
         decoder.setHttpServletRequest(req);
 
         try {
