@@ -1,6 +1,8 @@
 package com.obito.web;
 
 import java.io.IOException;
+import java.security.Provider;
+import java.security.Security;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.opensaml.core.config.InitializationException;
+import org.opensaml.core.config.InitializationService;
+import org.opensaml.xmlsec.config.JavaCryptoValidationInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,10 +68,32 @@ public class SsoLogin extends HttpServlet {
 		}else {
 			response.sendRedirect("login.jsp");
 		}
-		
-		
-		
-		
 	}
 
+	@Override
+	public void init() throws ServletException {
+		super.init();
+	    try {
+		 JavaCryptoValidationInitializer javaCryptoValidationInitializer =
+	                new JavaCryptoValidationInitializer();
+           //这个方法应该在OpenSAML初始化之前被调用，
+           //来确保当前的JCE环境可以符合要求：AES/CBC/ISO10126Padding
+           // 对于XML的加密，JCE需要支持ACE（128/256），并使用ISO10126Padding（填充位）
+           javaCryptoValidationInitializer.init();
+       } catch (InitializationException e) {
+           e.printStackTrace();
+       }
+
+       //打印当前已经被安装的所有JCE的provider
+       for (Provider jceProvider : Security.getProviders()) {
+           log.info(jceProvider.getInfo());
+       }
+
+       try {
+           log.info(" accessFilter Initializing");
+           InitializationService.initialize();
+       } catch (InitializationException e) {
+           throw new RuntimeException("Initialization failed");
+       }   
+	}
 }
